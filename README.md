@@ -1,3 +1,3 @@
-# Android-ABatteryView
+# ABatteryView
 
-An Android costomized View to display battery level with charging status.
+An iOS and Android costomized View to display battery level with charging status.
