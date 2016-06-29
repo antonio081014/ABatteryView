@@ -130,7 +130,7 @@ public class BatteryView extends View {
         int smallRectHeight = 2 * smallRectWidth;
         int offset = 10;
         Rect mainRect = new Rect(paddingLeft, paddingTop, paddingLeft + contentWidth - smallRectWidth, paddingTop + contentHeight);
-        Rect fillRect = new Rect(mainRect.left + offset, mainRect.top + offset, mainRect.right * this.getmLevel() / 100, mainRect.bottom - offset);
+        Rect fillRect = new Rect(mainRect.left + offset, mainRect.top + offset, (mainRect.right - offset) * this.getmLevel() / 100, mainRect.bottom - offset);
         Rect smallRect = new Rect(paddingLeft + contentWidth - smallRectWidth, paddingTop + (int) (contentHeight - smallRectHeight) / 2, paddingLeft + contentWidth, paddingTop + (int) (contentHeight + smallRectHeight) / 2);
         canvas.drawRect(mainRect, mMainRectStrokePaint);
         canvas.drawRect(mainRect, mMainRectPaint);
