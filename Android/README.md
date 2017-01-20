@@ -3,8 +3,7 @@
 An Android costomized View to display battery level with charging status.
 
 ### Demo
-
-![Presentation](https://raw.githubusercontent.com/antonio081014/ABatteryView/master/Android/demo.gif)
+<p align="center"><img src="https://media.giphy.com/media/l0EwYzyKHwRXGRAaI/giphy.gif"></p>
 
 ***
 
