@@ -1,6 +1,9 @@
 <resources>
     <declare-styleable name="BatteryView">
         <attr name="charging" format="boolean" />
+        <attr name="showValue" format="boolean" />
+        <attr name="levelColors" format="boolean" />
+        <attr name="warningLevel" format="integer" />
         <attr name="level" format="integer" />
     </declare-styleable>
 </resources>
