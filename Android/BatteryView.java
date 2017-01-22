@@ -1,3 +1,4 @@
+//package YOUR_PACKAGE_HERE;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -6,8 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -21,16 +20,42 @@ public class BatteryView extends View {
      * No, otherwise.
      */
     private boolean mCharging;
+
+    /**
+     * Show text of the current level of battery.
+     * Yes, show.
+     * No, don't show
+     */
+    private boolean mShowValue;
+
+    /**
+     * Show different colors according to the actual battery level
+     * Yes, show.
+     * No, always GREEN
+     */
+    private boolean mlevelColors;
     
     /**
      * Indicate the level of the battery, ranging from 0 to 100.
      */
     private int mLevel;
+
+
+    /**
+     * Indicate the level when the battery viewer changes color from Green to RED, ranging from 0 to 99.
+     */
+    private int warningLevel;
     
     /**
      * Paint the Main Battery Body with transparent color.
      */
     private Paint mMainRectPaint;
+
+
+    /**
+     * Paint the actual value of the battery.
+     */
+    private Paint mTextValuePaint;
     
     /**
      * Paint the Main Battery Body with white border.
@@ -81,7 +106,10 @@ public class BatteryView extends View {
                 attrs, R.styleable.BatteryView, defStyle, 0);
 
         mCharging = a.getBoolean(R.styleable.BatteryView_charging, false);
+        mShowValue= a.getBoolean(R.styleable.BatteryView_showValue, true);
+        mlevelColors=a.getBoolean(R.styleable.BatteryView_showValue, true);
         mLevel = a.getInteger(R.styleable.BatteryView_level, 100);
+        warningLevel= a.getInteger(R.styleable.BatteryView_warningLevel, 35);
         a.recycle();
 
         setBackgroundColor(Color.TRANSPARENT);
@@ -108,6 +136,12 @@ public class BatteryView extends View {
         mChargingPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mChargingPaint.setColor(Color.WHITE);
         mChargingPaint.setStrokeWidth(5.f);
+
+        mTextValuePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextValuePaint.setTextAlign(Paint.Align.CENTER);
+        mTextValuePaint.setColor(Color.DKGRAY);
+
+
     }
 
     /**
@@ -126,6 +160,8 @@ public class BatteryView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
+        mTextValuePaint.setTextSize(contentWidth*0.2f);
+
         int smallRectWidth = (int) (1.f / 10.f * contentWidth);
         int smallRectHeight = 2 * smallRectWidth;
         int offset = 10;
@@ -135,7 +171,15 @@ public class BatteryView extends View {
         canvas.drawRect(mainRect, mMainRectStrokePaint);
         canvas.drawRect(mainRect, mMainRectPaint);
         canvas.drawRect(smallRect, mSmallRectPaint);
+
+        if(mlevelColors)
+        fillColor =(mLevel <= warningLevel)?Color.RED:Color.GREEN;
+
+        mMainRectFillPaint.setColor(fillColor);
         canvas.drawRect(fillRect, mMainRectFillPaint);
+
+        if(mShowValue && !mCharging)
+        canvas.drawText("" + mLevel, contentWidth * 3/7 , contentHeight * 2/3 , mTextValuePaint);
 
         if (ismCharging()) {
             int chargingHeight = fillRect.height();
