@@ -1,5 +1,7 @@
 # Android-ABatteryView
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-BatteryView-brightgreen.svg)](https://android-arsenal.com/details/1/5155)
+
 An Android costomized View to display battery level with charging status.
 
 ### Demo
